@@ -1,4 +1,4 @@
-import Card from "./Components/UserCard";
+import Card from "./Components/User/UserCard";
 import { View, Text, StatusBar, StyleSheet } from "react-native";
 
 export default function AppLayout() {

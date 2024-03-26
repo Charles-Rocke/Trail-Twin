@@ -2,7 +2,7 @@
 // this is owen again
 // Charles commit
 // Owens comment 2
-import Card from "./Components/UserCard";
+import Card from "./Components/User/UserCard";
 import AppLayout from "./AppLayout";
 import ExploreScreen from "./screens/ExploreScreen";
 import MessageScreen from "./screens/MessageScreen";
@@ -26,3 +26,5 @@ export default function App() {
     </NavigationContainer>
   );
 }
+
+// git checkout user_profile

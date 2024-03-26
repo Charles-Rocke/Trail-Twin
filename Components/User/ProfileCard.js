@@ -2,11 +2,11 @@ import * as React from "react";
 import { StyleSheet, View, TouchableOpacity } from "react-native";
 import { Avatar, Card, Text } from "react-native-paper";
 import EditButton from "../ui/EditButton";
-import ProfileImg from "../../assets/images/profileImg.png";
+import Carousel from "../ui/Carousel";
 
 const ProfileCard = ({ user }) => (
   <Card style={styles.card}>
-    <Card.Cover source={ProfileImg} />
+    <Carousel images={user.images}/>
     <Card.Content>
       <Text style={styles.title}>{user.name}</Text>
 

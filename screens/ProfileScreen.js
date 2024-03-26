@@ -1,3 +1,5 @@
+// user profile screen
+
 import { Text, View, StyleSheet } from "react-native";
 import ProfileCard from "../Components/User/ProfileCard";
 import ProfileImg from "../assets/images/profileImg.png";

@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     borderBottomWidth: 1,
+    borderBottomColor: '#e1e1e1',
   },
   navTitle: {
     fontSize: 18,

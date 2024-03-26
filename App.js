@@ -21,23 +21,26 @@ export default function App() {
   return (
     <NavigationContainer>
       <Tab.Navigator initialRouteName="Explore">
-        <Tab.Screen 
-          component={MessageScreen} 
+        <Tab.Screen
+          name="MessageScreen"
+          component={MessageScreen}
           options={{
             tabBarIcon: ({ color, size }) => (
               <Feather name="message-square" size={24} color="black" />
-              ),
-            }}
+            ),
+          }}
         />
-        <Tab.Screen 
-          component={ExploreScreen} 
+        <Tab.Screen
+          name="ExploreScreen"
+          component={ExploreScreen}
           options={{
             tabBarIcon: ({ color, size }) => (
               <Feather name="users" size={24} color="black" />
-              ),
-            }}
+            ),
+          }}
         />
         <Tab.Screen
+          name="ProfileScreen"
           component={ProfileScreen}
           options={{
             tabBarIcon: ({ color, size }) => (

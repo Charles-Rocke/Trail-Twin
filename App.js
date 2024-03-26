@@ -14,6 +14,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { PaperProvider } from "react-native-paper";
 import { Ionicons, AntDesign, Feather } from "@expo/vector-icons";
 import { GlobalStyles } from "./constants/styles";
+import SettingsButton from "./Components/ui/SettingsButton";
 
 const Tab = createBottomTabNavigator();
 
@@ -35,6 +36,7 @@ export default function App() {
             name="MessageScreen"
             component={MessageScreen}
             options={{
+              title: "Messages",
               tabBarLabel: "",
               tabBarIcon: ({ focused, color, size }) => (
                 <Feather
@@ -53,6 +55,7 @@ export default function App() {
             name="ExploreScreen"
             component={ExploreScreen}
             options={{
+              title: "Explore",
               tabBarLabel: "",
               tabBarIcon: ({ focused, color, size }) => (
                 <Feather
@@ -71,6 +74,10 @@ export default function App() {
             name="ProfileScreen"
             component={ProfileScreen}
             options={{
+              title: "Profile",
+              headerRight: () => {
+                return <SettingsButton color={GlobalStyles.colors.primary50} />;
+              },
               tabBarLabel: "",
               tabBarIcon: ({ focused, color, size }) => (
                 <Feather

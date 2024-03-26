@@ -1,25 +1,21 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { GlobalStyles } from "../../constants/styles";
+import { Ionicons, AntDesign, Feather } from "@expo/vector-icons";
 
-
-function Button({ children, onPress, mode }) {
+function EditButton({ children, onPress, mode }) {
   return (
     <View>
       <Pressable
         onPress={onPress}
         style={({ pressed }) => pressed && styles.pressed}
       >
-        <View style={[styles.button, mode === "flat" && styles.flat]}>
-          <Text style={[styles.buttonText, mode === "flat" && styles.flatText]}>
-            {children}
-          </Text>
-        </View>
+      <Feather name="edit" size={16} color="black" />
       </Pressable>
     </View>
   );
 }
 
-export default Button;
+export default EditButton;
 
 const styles = StyleSheet.create({
   button: {
@@ -29,9 +25,6 @@ const styles = StyleSheet.create({
   },
   flat: {
     backgroundColor: GlobalStyles.colors.primary500,
-  },
-  flatText: {
-    color: GlobalStyles.colors.primary50,
   },
   buttonText: {
     color: "white",

@@ -1,12 +1,28 @@
 import { Text, View, StyleSheet } from "react-native";
+import ProfileCard from "../Components/User/ProfileCard";
+import ProfileImg from "../assets/images/profileImg.png";
+
+const user = [
+  {
+    id: 1,
+    name: "Bud Dozer",
+    image: ProfileImg,
+    bio: "🌲 Skiing adict 🌿 | Sending big backflips! 🏞️",
+    activities: [
+      "Skiing",
+      "Backcountry SKiing",
+    ],
+  }
+];
 
 function ProfileScreen() {
   return (
     <View>
-      <Text>Profile Screen</Text>
+      <ProfileCard user={user[0]}/> 
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -16,4 +32,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
+
 export default ProfileScreen;

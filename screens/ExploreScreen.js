@@ -13,7 +13,7 @@ const users = [
   },
   {
     id: 2,
-    name: "Michael Scott",
+    name: "Michael",
     image: ProfileImg,
     bio: "🌲 Outdoor Enthusiast 🌿 | Connecting with Like-minded Adventurers 🏞️",
     activities:

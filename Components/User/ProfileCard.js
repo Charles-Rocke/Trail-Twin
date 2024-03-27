@@ -4,53 +4,55 @@ import { Avatar, Card, Text } from "react-native-paper";
 import EditButton from "../ui/EditButton";
 import ProfileImg from "../../assets/images/profileImg.png";
 
-const ProfileCard = ({ user }) => (
-  <Card style={styles.card}>
-    <Card.Cover source={ProfileImg} />
-    <Card.Content>
-      <Text style={styles.title}>{user.name}</Text>
+function ProfileCard({ user }) {
+  return (
+    <Card style={styles.card}>
+      <Card.Cover style={styles.card} source={ProfileImg} />
+      <Card.Content>
+        <Text style={styles.title}>{user.name}</Text>
 
-      <View style={styles.row}>
-        <View style={styles.listItem}>
-          <Text style={styles.listTitle}>Bio</Text>
-          <Text>{user.bio}</Text>
+        <View style={styles.row}>
+          <View style={styles.listItem}>
+            <Text style={styles.listTitle}>Bio</Text>
+            <Text>{user.bio}</Text>
+          </View>
+          <EditButton style={styles.button} />
         </View>
-        <EditButton style={styles.button} />
-      </View>
 
-      <View style={styles.row}>
-        <View style={styles.listItem}>
-          <Text style={styles.listTitle}>Activities</Text>
-          <Text>{user.activities.join(', ')}</Text>
+        <View style={styles.row}>
+          <View style={styles.listItem}>
+            <Text style={styles.listTitle}>Activities</Text>
+            <Text>{user.activities.join(", ")}</Text>
+          </View>
+          <EditButton style={styles.button} />
         </View>
-        <EditButton style={styles.button} />
-      </View>
-    </Card.Content>
-  </Card>
-);
+      </Card.Content>
+    </Card>
+  );
+}
 
 const styles = StyleSheet.create({
   card: {
     margin: 10,
+    justifyContent: "center",
   },
   title: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginTop: 20,
   },
   row: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginTop: 20,
   },
   listItem: {
     flex: 1,
   },
   listTitle: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
-  button: {
-  },
+  button: {},
 });
 
 export default ProfileCard;

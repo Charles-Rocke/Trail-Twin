@@ -4,21 +4,23 @@ import { Avatar, Card, Text, List } from "react-native-paper";
 import Button from "../ui/Button";
 import ProfileImg from "../../assets/images/profileImg.png";
 
-const UserCard = ({ user }) => (
-  <Card style={styles.userCard}>
-    <Card.Cover style={styles.userCard} source={ProfileImg} />
-    <Card.Content>
-      <Text variant="titleLarge">{user.name}</Text>
-      <List.Item title="Bio" description={user.bio} />
-      <List.Item title="Activities" description={user.activities} />
-    </Card.Content>
-    <View style={styles.button}>
-      <Button onPress={() => {}} mode="flat">
-        Add Friend
-      </Button>
-    </View>
-  </Card>
-);
+function UserCard({ user }) {
+  return (
+    <Card style={styles.userCard}>
+      <Card.Cover style={styles.userCard} source={ProfileImg} />
+      <Card.Content>
+        <Text variant="titleLarge">{user.name}</Text>
+        <List.Item title="Bio" description={user.bio} />
+        <List.Item title="Activities" description={user.activities} />
+      </Card.Content>
+      <View style={styles.button}>
+        <Button onPress={() => {}} mode="flat">
+          Add Friend
+        </Button>
+      </View>
+    </Card>
+  );
+}
 
 const styles = StyleSheet.create({
   userCard: {

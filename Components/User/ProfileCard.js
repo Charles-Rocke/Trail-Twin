@@ -28,7 +28,7 @@ const ProfileCard = ({ user }) => (
       </Card.Content>
     </Card>
   );
-}
+
 
 const styles = StyleSheet.create({
   card: {

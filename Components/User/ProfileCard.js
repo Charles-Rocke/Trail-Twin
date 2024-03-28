@@ -4,11 +4,12 @@ import { Avatar, Card, Text } from "react-native-paper";
 import EditButton from "../ui/EditButton";
 import Carousel from "../ui/Carousel";
 
-const ProfileCard = ({ user }) => (
-  <Card style={styles.card}>
-    <Carousel images={user.images}/>
-    <Card.Content>
-      <Text style={styles.title}>{user.name}</Text>
+function ProfileCard({ user }) {
+  return (
+    <Card style={styles.card}>
+      <Carousel images={user.images} />
+      <Card.Content>
+        <Text style={styles.title}>{user.name}</Text>
 
         <View style={styles.row}>
           <View style={styles.listItem}>

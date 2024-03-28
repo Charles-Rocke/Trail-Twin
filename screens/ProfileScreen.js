@@ -6,20 +6,18 @@ import SettingsButton from "../Components/ui/SettingsButton";
 import ProfileImg from "../assets/images/profileImg.png";
 import IconButton from "../Components/ui/IconButton";
 
-const user = [
-  {
-    id: 1,
-    name: "Bud Dozer",
-    image: ProfileImg,
-    bio: "🌲 Skiing addict 🌿 | Sending big backflips! 🏞️",
-    activities: ["Skiing", "Backcountry Skiing"],
-  },
-];
+const user = {
+  id: 1,
+  name: "Bud Dozer",
+  image: [ProfileImg],
+  bio: "🌲 Skiing addict 🌿 | Sending big backflips! 🏞️",
+  activities: ["Skiing", "Backcountry Skiing"],
+};
 
 function ProfileScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <ProfileCard user={user[0]} />
+      <ProfileCard user={user} />
     </View>
   );
 }

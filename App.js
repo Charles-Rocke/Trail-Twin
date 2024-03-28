@@ -1,7 +1,3 @@
-// Correct repo?
-// this is owen again
-// Charles commit
-// Owens comment 2
 import Card from "./Components/User/UserCard";
 import ExploreScreen from "./screens/ExploreScreen";
 import MessageScreen from "./screens/MessageScreen";

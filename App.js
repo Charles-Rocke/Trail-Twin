@@ -14,10 +14,51 @@ import { Ionicons, AntDesign, Feather } from "@expo/vector-icons";
 import { GlobalStyles } from "./constants/styles";
 import IconButton from "./Components/ui/IconButton";
 import SettingsScreen from "./screens/SettingsScreen";
+import NotificationIcon from "./Components/ui/NotificationIcon";
+import NotificationScreen from "./screens/NotificationScreen";
 
+/**
+ *
+ */
 const NativeStack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
 const ProfileStack = createNativeStackNavigator();
+const MessageStack = createNativeStackNavigator();
+
+function MessageStackScreen({ navigation }) {
+  return (
+    <MessageStack.Navigator
+      screenOptions={({ navigation }) => ({
+        headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
+        headerTintColor: GlobalStyles.colors.primary50,
+        tabBarStyle: { backgroundColor: GlobalStyles.colors.primary500 },
+        tabBarActiveTintColor: GlobalStyles.colors.green400,
+      })}
+    >
+      <MessageStack.Screen
+        name="MessageScreen"
+        component={MessageScreen}
+        options={{
+          title: "Messages",
+          headerBackTitle: "Custom Back", // Customize the back button label
+          headerBackTitleStyle: { fontSize: 30 },
+          headerRight: () => {
+            return (
+              <NotificationIcon
+                color={GlobalStyles.colors.primary50}
+                onPress={() => navigation.navigate("Notifications")}
+              />
+            );
+          },
+        }}
+      />
+      <MessageStack.Screen
+        name="Notifications"
+        component={NotificationScreen}
+      />
+    </MessageStack.Navigator>
+  );
+}
 
 function ProfileStackScreen({ navigation }) {
   return (
@@ -68,10 +109,11 @@ export default function App() {
           })}
         >
           <BottomTab.Screen
-            name="MessageScreen"
-            component={MessageScreen}
+            name="Message"
+            component={MessageStackScreen}
             options={{
               title: "Messages",
+              headerShown: false,
               tabBarIconStyle: {
                 // Adjust the icon style to remove white space
                 alignSelf: "center", // Center the icon

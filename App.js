@@ -45,6 +45,7 @@ function MessageStackScreen({ navigation }) {
           headerRight: () => {
             return (
               <NotificationIcon
+                name="notifications-outline"
                 color={GlobalStyles.colors.primary50}
                 onPress={() => navigation.navigate("Notifications")}
               />

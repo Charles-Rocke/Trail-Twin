@@ -37,8 +37,8 @@ function Stories() {
 const styles = StyleSheet.create({
   friendContainer: {
     width: 100, // Adjust the width as needed
-    marginRight: 10,
     marginTop: 10,
+    paddingBottom: 2,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#f0f0f0", // Example background color

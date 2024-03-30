@@ -1,12 +1,12 @@
 import { Text, View, StyleSheet } from "react-native";
-import HorizontalScroll from "../../Components/ui/HorizontalScroll";
+import Stories from "../../Components/ui/Stories";
 import MessageSection from "../../Components/ui/Messages/MessageSection";
 
 function MessageScreen() {
   return (
     <>
       <View style={{ marginBottom: 12 }}>
-        <HorizontalScroll />
+        <Stories />
       </View>
       <View style={{ flex: 1 }}>
         <MessageSection />

@@ -14,7 +14,7 @@ const friends = [
   // Add more friends as needed
 ];
 
-function HorizontalScroll() {
+function Stories() {
   // Function to render each item in the list
   const renderItem = ({ item }) => (
     <View style={styles.friendContainer}>
@@ -53,4 +53,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HorizontalScroll;
+export default Stories;

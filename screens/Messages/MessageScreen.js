@@ -1,6 +1,6 @@
 import { Text, View, StyleSheet } from "react-native";
-import HorizontalScroll from "../Components/ui/HorizontalScroll";
-import MessageSection from "../Components/ui/MessageSection";
+import HorizontalScroll from "../../Components/ui/HorizontalScroll";
+import MessageSection from "../../Components/ui/Messages/MessageSection";
 
 function MessageScreen() {
   return (

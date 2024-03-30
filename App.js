@@ -1,6 +1,7 @@
 import Card from "./Components/User/UserCard";
 import ExploreScreen from "./screens/ExploreScreen";
-import MessageScreen from "./screens/MessageScreen";
+import MessageScreen from "./screens/Messages/MessageScreen";
+import ChatScreen from "./screens/Messages/ChatScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import SettingsButton from "./Components/ui/SettingsButton";
 
@@ -56,6 +57,13 @@ function MessageStackScreen({ navigation }) {
       <MessageStack.Screen
         name="Notifications"
         component={NotificationScreen}
+      />
+      <MessageStack.Screen
+        name="Chat"
+        component={ChatScreen}
+        options={{
+          presentation: "modal",
+        }}
       />
     </MessageStack.Navigator>
   );

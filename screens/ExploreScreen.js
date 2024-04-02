@@ -6,6 +6,7 @@ const users = [
   {
     id: 1,
     name: "Dirty Dan",
+    username: 'Dangotdirty',
     image: ProfileImg,
     bio: "🌲 Outdoor Enthusiast 🌿 | Connecting with Like-minded Adventurers 🏞️",
     activities: [
@@ -17,6 +18,7 @@ const users = [
   {
     id: 2,
     name: "Michael",
+    username: 'mcGamer',
     image: ProfileImg,
     bio: "🌲 Outdoor Enthusiast 🌿 | Connecting with Like-minded Adventurers 🏞️",
     activities:

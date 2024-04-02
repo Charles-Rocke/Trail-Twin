@@ -10,6 +10,7 @@ function UserCard({ user }) {
       <Card.Cover style={styles.userCard} source={ProfileImg} />
       <Card.Content>
         <Text variant="titleLarge">{user.name}</Text>
+        <List.item title="Username" description={`@${user.username}`}/>
         <List.Item title="Bio" description={user.bio} />
         <List.Item title="Activities" description={user.activities} />
       </Card.Content>

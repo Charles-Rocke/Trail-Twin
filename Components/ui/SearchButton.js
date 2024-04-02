@@ -2,20 +2,20 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { GlobalStyles } from "../../constants/styles";
 import { Feather } from "@expo/vector-icons";
 
-function SettingsButton({ onPress, color }) {
+function SearchButton({ onPress, color }) {
   return (
     <Pressable
       onPress={onPress}
       style={({ pressed }) => pressed && styles.pressed}
     >
       <View>
-        <Feather name="settings" size={24} color={color} />
+        <Feather name="search" size={24} color="black" /> 
       </View>
     </Pressable>
   );
 }
 
-export default SettingsButton;
+export default SearchButton;
 
 const styles = StyleSheet.create({
   pressed: {

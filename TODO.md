@@ -33,5 +33,6 @@
   x - layout
 - login page
 - register page
+- friend request layout
 
 # Bronson

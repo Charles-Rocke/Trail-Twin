@@ -1,6 +1,6 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import { Avatar, Card, Text, List } from "react-native-paper";
+import { Card, Text, List } from "react-native-paper";
 import Button from "../ui/Button";
 import ProfileImg from "../../assets/images/profileImg.png";
 
@@ -10,7 +10,6 @@ function UserCard({ user }) {
       <Card.Cover style={styles.userCard} source={ProfileImg} />
       <Card.Content>
         <Text variant="titleLarge">{user.name}</Text>
-        <List.item title="Username" description={`@${user.username}`}/>
         <List.Item title="Bio" description={user.bio} />
         <List.Item title="Activities" description={user.activities} />
       </Card.Content>

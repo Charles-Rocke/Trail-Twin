@@ -52,12 +52,6 @@ function ProfileStackScreen({ navigation }) {
 
 function ExploreStackScreen({ navigation }) {
 
-  const [isSearchVisible, setIsSearchVisible] = useState(false);
-
-  const toggleSearchBar = () => {
-    setIsSearchVisible((prevState) => !prevState);
-  };
-
   return (
     <ExploreStack.Navigator
       screenOptions={({ navigation }) => ({

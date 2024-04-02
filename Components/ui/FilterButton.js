@@ -9,7 +9,7 @@ function FilterButton({ onPress, color }) {
       style={({ pressed }) => pressed && styles.pressed}
     >
       <View>
-        <Ionicons name="filter" size={24} color="white" />
+        <Ionicons name="filter" size={24} color={color} />
       </View>
     </Pressable>
   );

@@ -9,7 +9,7 @@ function SearchButton({ onPress, color }) {
       style={({ pressed }) => pressed && styles.pressed}
     >
       <View>
-        <Feather name="search" size={24} color="black" /> 
+        <Feather name="search" size={24} color={color} /> 
       </View>
     </Pressable>
   );

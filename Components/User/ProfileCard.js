@@ -2,12 +2,15 @@ import * as React from "react";
 import { StyleSheet, View, TouchableOpacity } from "react-native";
 import { Avatar, Card, Text } from "react-native-paper";
 import EditButton from "../ui/EditButton";
-import ProfileImg from "../../assets/images/profileImg.png";
+import Carousel from "../ui/Carousel";
 
 function ProfileCard({ user }) {
   return (
     <Card style={styles.card}>
-      <Card.Cover style={styles.card} source={ProfileImg} />
+      <View >
+        <EditButton />
+        <Carousel images={user.images} />
+      </View>
       <Card.Content>
         <Text style={styles.title}>{user.name}</Text>
 
@@ -16,7 +19,7 @@ function ProfileCard({ user }) {
             <Text style={styles.listTitle}>Bio</Text>
             <Text>{user.bio}</Text>
           </View>
-          <EditButton style={styles.button} />
+          <EditButton />
         </View>
 
         <View style={styles.row}>
@@ -24,7 +27,7 @@ function ProfileCard({ user }) {
             <Text style={styles.listTitle}>Activities</Text>
             <Text>{user.activities.join(", ")}</Text>
           </View>
-          <EditButton style={styles.button} />
+          <EditButton />
         </View>
       </Card.Content>
     </Card>
@@ -52,7 +55,6 @@ const styles = StyleSheet.create({
   listTitle: {
     fontWeight: "bold",
   },
-  button: {},
 });
 
 export default ProfileCard;

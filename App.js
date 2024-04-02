@@ -1,27 +1,22 @@
-// Correct repo?
-// this is owen again
-// Charles commit
-// Owens comment 2
-import Card from "./Components/User/UserCard";
 import ExploreScreen from "./screens/ExploreScreen";
 import MessageScreen from "./screens/MessageScreen";
 import ProfileScreen from "./screens/ProfileScreen";
+import FilterScreen from "./screens/FilterScreen";
+import SettingsScreen from "./screens/SettingsScreen";
+
 import SettingsButton from "./Components/ui/SettingsButton";
+import FilterButton from "./Components/ui/FilterButton";
 
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
-import { PaperProvider } from "react-native-paper";
-import { Ionicons, AntDesign, Feather } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 import { GlobalStyles } from "./constants/styles";
-import IconButton from "./Components/ui/IconButton";
-import SettingsScreen from "./screens/SettingsScreen";
 
-const NativeStack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
 const ProfileStack = createNativeStackNavigator();
+const ExploreStack = createNativeStackNavigator();
 
 function ProfileStackScreen({ navigation }) {
   return (
@@ -38,7 +33,7 @@ function ProfileStackScreen({ navigation }) {
         component={ProfileScreen}
         options={{
           title: "Profile",
-          headerBackTitle: "Custom Back", // Customize the back button label
+          headerBackTitle: "Custom Back",
           headerBackTitleStyle: { fontSize: 30 },
           headerRight: () => {
             return (
@@ -52,6 +47,38 @@ function ProfileStackScreen({ navigation }) {
       />
       <ProfileStack.Screen name="Settings" component={SettingsScreen} />
     </ProfileStack.Navigator>
+  );
+}
+
+function ExploreStackScreen({ navigation }) {
+  return (
+    <ExploreStack.Navigator
+      screenOptions={({ navigation }) => ({
+        headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
+        headerTintColor: GlobalStyles.colors.primary50,
+        tabBarStyle: { backgroundColor: GlobalStyles.colors.primary500 },
+        tabBarActiveTintColor: GlobalStyles.colors.green400,
+      })}
+    >
+      <ExploreStack.Screen
+        name="ExploreScreen"
+        component={ExploreScreen}
+        options={{
+          title: "Explore",
+          headerBackTitle: "Custom Back",
+          headerBackTitleStyle: { fontSize: 30 },
+          headerRight: () => {
+            return (
+              <FilterButton
+                color={GlobalStyles.colors.primary50}
+                onPress={() => navigation.navigate("Filter")}
+              />
+            );
+          },
+        }}
+      />
+      <ExploreStack.Screen name="Filter" component={FilterScreen} />
+    </ExploreStack.Navigator>
   );
 }
 
@@ -77,13 +104,11 @@ export default function App() {
             options={{
               title: "Messages",
               tabBarIconStyle: {
-                // Adjust the icon style to remove white space
-                alignSelf: "center", // Center the icon
-                marginBottom: 0, // Remove bottom margin
+                alignSelf: "center",
+                marginBottom: 0,
               },
               tabBarLabelStyle: {
-                // Ensure the label is not visible
-                display: "none", // Hide the label
+                display: "none",
               },
               tabBarIcon: ({ focused, color, size }) => (
                 <Feather
@@ -99,18 +124,16 @@ export default function App() {
             }}
           />
           <BottomTab.Screen
-            name="ExploreScreen"
-            component={ExploreScreen}
+            name="Explore"
+            component={ExploreStackScreen}
             options={{
-              title: "Explore",
+              headerShown: false,
               tabBarIconStyle: {
-                // Adjust the icon style to remove white space
-                alignSelf: "center", // Center the icon
-                marginBottom: 0, // Remove bottom margin
+                alignSelf: "center",
+                marginBottom: 0,
               },
               tabBarLabelStyle: {
-                // Ensure the label is not visible
-                display: "none", // Hide the label
+                display: "none",
               },
               tabBarIcon: ({ focused, color, size }) => (
                 <Feather
@@ -131,13 +154,11 @@ export default function App() {
             options={{
               headerShown: false,
               tabBarIconStyle: {
-                // Adjust the icon style to remove white space
-                alignSelf: "center", // Center the icon
-                marginBottom: 0, // Remove bottom margin
+                alignSelf: "center",
+                marginBottom: 0,
               },
               tabBarLabelStyle: {
-                // Ensure the label is not visible
-                display: "none", // Hide the label
+                display: "none",
               },
               tabBarIcon: ({ focused, color, size }) => (
                 <Feather

@@ -1,9 +1,5 @@
 ## TODO LIST
 ---
-- incoming friend requests list page
-- friends list
-- chats list
-- individual chat window ( separate page)
 - connect to backend
 - logo
 - refine UI
@@ -15,10 +11,13 @@
 ## IN PROGRESS
 ---
 # Owen
-- edit photos button
-- search users by username
+- look into connecting to backend
+- refining UI
+- Business plan?
 
 # Charles
+- individual chat window (pop up)
+- incoming friend requests list page
 - top nav bar - Charles
 - message page
 - login page
@@ -36,6 +35,12 @@
 - user profile page (draft)
 - settings page (draft)
 - search filter page (draft)
+- search users by username
+- edit photos button
 - logout button
+- chats list
+- friends list
 - list peoples username on profile card
+- fix carousel and add it to explore page
+
 

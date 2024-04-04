@@ -6,6 +6,7 @@ import ProfileCard from "../Components/User/ProfileCard";
 const user = {
   id: 1,
   name: "Bud Dozer",
+  username: 'budflippy',
   images: [
     {
       id: 1,
@@ -20,7 +21,7 @@ const user = {
       uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Hiking_to_the_Ice_Lakes._San_Juan_National_Forest%2C_Colorado.jpg/1200px-Hiking_to_the_Ice_Lakes._San_Juan_National_Forest%2C_Colorado.jpg",
     },
   ],
-  bio: "🌲 Skiing addict 🌿 | Sending big backflips! 🏞️",
+  bio: " Skiing | Sending big backflips! ",
   activities: ["Skiing", "Backcountry Skiing"],
 };
 

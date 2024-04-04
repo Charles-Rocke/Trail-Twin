@@ -2,16 +2,19 @@ import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { Card, Text, List } from "react-native-paper";
 import Button from "../ui/Button";
-import ProfileImg from "../../assets/images/profileImg.png";
+import Carousel from "../ui/Carousel";
 
 function UserCard({ user }) {
   return (
     <Card style={styles.userCard}>
-      <Card.Cover style={styles.userCard} source={ProfileImg} />
+      <Carousel images={user.images} showEditButton={false} />
       <Card.Content>
-        <Text variant="titleLarge">{user.name}</Text>
-        <List.Item title="Bio" description={user.bio} />
-        <List.Item title="Activities" description={user.activities} />
+          <Text style={styles.name}>{user.name}</Text>
+          <Text style={ {margin: 4} }>@{user.username}</Text>
+        <Text style={styles.title}>Bio</Text>
+        <List.Item description={user.bio} />
+        <Text style={styles.title}>Activities</Text>
+        <List.Item description={user.activities} />
       </Card.Content>
       <View style={styles.button}>
         <Button onPress={() => {}} mode="flat">
@@ -26,6 +29,16 @@ const styles = StyleSheet.create({
   userCard: {
     margin: 10,
     justifyContent: "center",
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: "bold",
+    margin: 4,
+  },
+  name: {
+    fontSize: 24,
+    fontWeight: "bold",
+    margin: 4,
   },
   button: {
     minWidth: 120,

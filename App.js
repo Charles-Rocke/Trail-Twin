@@ -3,15 +3,18 @@ import MessageScreen from "./screens/MessageScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import FilterScreen from "./screens/FilterScreen";
 import SettingsScreen from "./screens/SettingsScreen";
+import SearchScreen from "./screens/SearchScreen";
 
 import SettingsButton from "./Components/ui/SettingsButton";
 import FilterButton from "./Components/ui/FilterButton";
+import SearchButton from "./Components/ui/SearchButton";
 
 import { StatusBar } from "expo-status-bar";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
+import { View } from "react-native";
 import { GlobalStyles } from "./constants/styles";
 
 const BottomTab = createBottomTabNavigator();
@@ -51,7 +54,6 @@ function ProfileStackScreen({ navigation }) {
 }
 
 function ExploreStackScreen({ navigation }) {
-
   return (
     <ExploreStack.Navigator
       screenOptions={({ navigation }) => ({
@@ -68,6 +70,14 @@ function ExploreStackScreen({ navigation }) {
           title: "Explore",
           headerBackTitle: "Custom Back",
           headerBackTitleStyle: { fontSize: 30 },
+          headerLeft: () => {
+            return (
+              <SearchButton
+                color={GlobalStyles.colors.primary50}
+                onPress={() => navigation.navigate("Search")}
+              />
+            );
+          },
           headerRight: () => {
             return (
               <FilterButton
@@ -79,6 +89,7 @@ function ExploreStackScreen({ navigation }) {
         }}
       />
       <ExploreStack.Screen name="Filter" component={FilterScreen} />
+      <ExploreStack.Screen name="Search" component={SearchScreen} />
     </ExploreStack.Navigator>
   );
 }

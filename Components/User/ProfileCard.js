@@ -8,12 +8,11 @@ function ProfileCard({ user }) {
   return (
     <Card style={styles.card}>
       <View >
-        <EditButton />
-        <Carousel images={user.images} />
+        <Carousel images={user.images} showEditButton={true}/>
       </View>
       <Card.Content>
         <Text style={styles.title}>{user.name}</Text>
-
+        <Text variant="titleSmall">@{user.username}</Text>
         <View style={styles.row}>
           <View style={styles.listItem}>
             <Text style={styles.listTitle}>Bio</Text>

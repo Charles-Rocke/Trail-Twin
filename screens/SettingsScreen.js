@@ -25,21 +25,21 @@ const SettingsScreen = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text>Username</Text>
+      <Text style={styles.firstTitle}>Username</Text>
       <TextInput
         style={styles.input}
         onChangeText={setUsername}
         value={username}
         placeholder="Username"
       />
-      <Text>Email</Text>
+      <Text style={styles.title}>Email</Text>
       <TextInput
         style={styles.input}
         onChangeText={setEmail}
         value={email}
         placeholder="Email"
       />
-      <Text>Phone Number</Text>
+      <Text style={styles.title}>Phone Number</Text>
       <TextInput
         style={styles.input}
         onChangeText={setPhoneNumber}
@@ -47,7 +47,7 @@ const SettingsScreen = () => {
         keyboardType="phone-pad"
         placeholder="Phone Number"
       />
-      <Text>Address</Text>
+      <Text style={styles.title}>Address</Text>
       <TextInput
         style={styles.input}
         onChangeText={setAddress}
@@ -55,7 +55,7 @@ const SettingsScreen = () => {
         placeholder="Address"
       />
       <View style={styles.switchContainer}>
-        <Text>Enable Notifications</Text>
+        <Text style={styles.title}>Enable Notifications</Text>
         <Switch
           onValueChange={() =>
             setIsNotificationsEnabled((previousState) => !previousState)
@@ -64,7 +64,7 @@ const SettingsScreen = () => {
         />
       </View>
       <View style={styles.switchContainer}>
-        <Text>Dark Mode</Text>
+        <Text style={styles.title}>Dark Mode</Text>
         <Switch
           onValueChange={() =>
             setIsDarkModeEnabled((previousState) => !previousState)
@@ -82,20 +82,53 @@ const SettingsScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 20,
+  searchContainer: {
+    flexDirection: 'row',
+    paddingHorizontal: 15, // Slightly increased for better spacing
+    paddingVertical: 10, // Increased for a taller search bar
+    alignItems: 'center',
+    backgroundColor: '#f2f2f2', // Lighter background for a subtle contrast
+    margin: 20, // Adjust margin for better spacing from screen edges
+    marginTop: 50, // Additional top margin to prevent overlap with status bar/navigation
+    borderRadius: 30, // Increased for rounder edges
+    borderWidth: 1, // Add a border
+    borderColor: '#cccccc', // Light grey border color
+    shadowColor: '#000', // Shadow for depth, works on iOS
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5, // Elevation for Android
   },
-  input: {
-    height: 40,
-    marginBottom: 20,
-    padding: 10,
+  firstTitle: {
+    padding: 2,
+    marginTop: 16,
+    marginLeft: 16,
+  },
+  title: {
+    padding: 2, 
+    marginLeft: 16,
   },
   switchContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 20,
+    margin: 8,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flex: 1,
   },
+  input: {
+    margin: 12,
+    flex: 1,
+    marginRight: 10, // Keep as is for spacing between the input and the button
+    backgroundColor: '#ffffff', // Pure white background for the input field
+    borderRadius: 5, // Rounded edges for the input field
+    paddingHorizontal: 15, // Inner spacing for the text
+    fontSize: 16, // Slightly larger text for better readability
+    height: 40, // Fixed height for a more consistent appearance
+  },
+  // If you have control over the Button component styling, consider using a TouchableOpacity for better styling capabilities
 });
 
 export default SettingsScreen;

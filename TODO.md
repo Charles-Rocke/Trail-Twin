@@ -3,7 +3,9 @@
 ## TODO LIST
 ---
 
-- connect to backend
+- add a search button on the top left of the message screen to search for a chat?
+- add a button in the message screen to make group chats?
+- maybe instead of having a list row of friends, have a chat automatically created when accepting a friend request, this way the chat list will also serve as a friends list
 - logo
 - refine UI
 - refine color scheme
@@ -15,8 +17,8 @@
 ---
 
 # Owen
-- look into connecting to backend
-- refining UI
+- implement redux
+- connect to backend
 - Business plan?
 
 # Charles

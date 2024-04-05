@@ -1,7 +1,6 @@
-import { Text, View, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import Stories from "../../Components/ui/Stories";
 import MessageSection from "../../Components/ui/Messages/MessageSection";
-import { GlobalStyles } from "../../constants/styles";
 
 function MessageScreen() {
   return (

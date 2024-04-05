@@ -1,12 +1,10 @@
 import ExploreScreen from "./screens/ExploreScreen";
-import MessageScreen from "./screens/MessageScreen";
+import MessageScreen from "./screens/Messages/MessageScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import FilterScreen from "./screens/FilterScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 import SearchScreen from "./screens/SearchScreen";
 import ChatScreen from "./screens/Messages/ChatScreen";
-import MessageScreen from "./screens/Messages/MessageScreen";
-import ExploreScreen from "./screens/ExploreScreen";
 import NotificationIcon from "./Components/ui/NotificationIcon";
 import NotificationScreen from "./screens/NotificationScreen";
 

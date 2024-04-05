@@ -4,6 +4,11 @@ import ProfileScreen from "./screens/ProfileScreen";
 import FilterScreen from "./screens/FilterScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 import SearchScreen from "./screens/SearchScreen";
+import ChatScreen from "./screens/Messages/ChatScreen";
+import MessageScreen from "./screens/Messages/MessageScreen";
+import ExploreScreen from "./screens/ExploreScreen";
+import NotificationIcon from "./Components/ui/NotificationIcon";
+import NotificationScreen from "./screens/NotificationScreen";
 
 import SettingsButton from "./Components/ui/SettingsButton";
 import FilterButton from "./Components/ui/FilterButton";
@@ -14,12 +19,55 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
-import { View } from "react-native";
 import { GlobalStyles } from "./constants/styles";
+
 
 const BottomTab = createBottomTabNavigator();
 const ProfileStack = createNativeStackNavigator();
 const ExploreStack = createNativeStackNavigator();
+
+function MessageStackScreen({ navigation }) {
+  return (
+    <MessageStack.Navigator
+      screenOptions={({ navigation }) => ({
+        headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
+        headerTintColor: GlobalStyles.colors.primary50,
+        tabBarStyle: { backgroundColor: GlobalStyles.colors.primary500 },
+        tabBarActiveTintColor: GlobalStyles.colors.green400,
+      })}
+    >
+      <MessageStack.Screen
+        name="MessageScreen"
+        component={MessageScreen}
+        options={{
+          title: "Messages",
+          headerBackTitle: "Custom Back", // Customize the back button label
+          headerBackTitleStyle: { fontSize: 30 },
+          headerRight: () => {
+            return (
+              <NotificationIcon
+                name="notifications-outline"
+                color={GlobalStyles.colors.primary50}
+                onPress={() => navigation.navigate("Notifications")}
+              />
+            );
+          },
+        }}
+      />
+      <MessageStack.Screen
+        name="Notifications"
+        component={NotificationScreen}
+      />
+      <MessageStack.Screen
+        name="Chat"
+        component={ChatScreen}
+        options={{
+          presentation: "modal",
+        }}
+      />
+    </MessageStack.Navigator>
+  );
+}
 
 function ProfileStackScreen({ navigation }) {
   return (
@@ -111,16 +159,17 @@ export default function App() {
           })}
         >
           <BottomTab.Screen
-            name="MessageScreen"
-            component={MessageScreen}
+            name="Message"
+            component={MessageStackScreen}
             options={{
               title: "Messages",
+              headerShown: false,
               tabBarIconStyle: {
                 alignSelf: "center",
                 marginBottom: 0,
               },
               tabBarLabelStyle: {
-                display: "none",
+                display: "none", 
               },
               tabBarIcon: ({ focused, color, size }) => (
                 <Feather

@@ -29,7 +29,6 @@ function ProfileScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <ProfileCard user={user} />
-      <ProfileCard user={user} />
     </View>
   );
 }

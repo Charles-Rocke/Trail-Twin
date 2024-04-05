@@ -23,6 +23,7 @@ import { GlobalStyles } from "./constants/styles";
 const BottomTab = createBottomTabNavigator();
 const ProfileStack = createNativeStackNavigator();
 const ExploreStack = createNativeStackNavigator();
+const MessageStack = createNativeStackNavigator();
 
 function MessageStackScreen({ navigation }) {
   return (

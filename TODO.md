@@ -1,5 +1,8 @@
+
+
 ## TODO LIST
 ---
+
 - connect to backend
 - logo
 - refine UI
@@ -10,16 +13,17 @@
 
 ## IN PROGRESS
 ---
+
 # Owen
 - look into connecting to backend
 - refining UI
 - Business plan?
 
 # Charles
-- individual chat window (pop up)
-- incoming friend requests list page
 - top nav bar - Charles
+  x - pull up friend request list screen from notifications icon
 - message page
+  x - layout
 - login page
 - register page
 
@@ -30,6 +34,7 @@
 
 ## DONE
 ---
+
 - settings page (draft)
 - explore page (draft)
 - user profile page (draft)

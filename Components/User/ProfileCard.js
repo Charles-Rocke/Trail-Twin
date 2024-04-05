@@ -3,6 +3,7 @@ import { StyleSheet, View, TouchableOpacity } from "react-native";
 import { Avatar, Card, Text } from "react-native-paper";
 import EditButton from "../ui/EditButton";
 import Carousel from "../ui/Carousel";
+import Carousel from "../ui/Carousel";
 
 function ProfileCard({ user }) {
   return (

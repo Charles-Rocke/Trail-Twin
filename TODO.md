@@ -3,12 +3,14 @@
 ## TODO LIST
 ---
 
-- add a search button on the top left of the message screen to search for a chat?
-- add a button in the message screen to make group chats?
-- maybe instead of having a list row of friends, have a chat automatically created when accepting a friend request, this way the chat list will also serve as a friends list
+- add a search button on the top left of the message screen to search for a chat? - idea
+- add a button in the message screen to make group chats? - idea
+- maybe instead of having a list row of friends, have a chat automatically created with the friend when accepting a friend request, this way the chat list will also serve as a friends list - idea
+- make edit profile buttons functions
 - logo
 - refine UI
 - refine color scheme
+- dark mode
 - deploy to app store
 
 
@@ -19,7 +21,6 @@
 # Owen
 - implement redux
 - connect to backend
-- Business plan?
 
 # Charles
 - top nav bar - Charles

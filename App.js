@@ -11,6 +11,7 @@ import NotificationScreen from "./screens/NotificationScreen";
 import SettingsButton from "./Components/ui/SettingsButton";
 import FilterButton from "./Components/ui/FilterButton";
 import SearchButton from "./Components/ui/SearchButton";
+import Auth from "./Components/Auth/Auth";
 
 import { StatusBar } from "expo-status-bar";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -18,7 +19,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
 import { GlobalStyles } from "./constants/styles";
-
+import { Session } from "@supabase/supabase-js";
 
 const BottomTab = createBottomTabNavigator();
 const ProfileStack = createNativeStackNavigator();
@@ -142,99 +143,113 @@ function ExploreStackScreen({ navigation }) {
 }
 
 export default function App() {
+  const [session, setSession] = (useState < Session) | (null > null);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
+
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+  }, []);
   return (
     <>
+      <Auth />
       <StatusBar style="light" />
-      <NavigationContainer>
-        <BottomTab.Navigator
-          initialRouteName="Explore"
-          screenOptions={({ navigation }) => ({
-            headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
-            headerTintColor: GlobalStyles.colors.primary50,
-            tabBarStyle: {
-              backgroundColor: GlobalStyles.colors.primary500,
-            },
-            tabBarActiveTintColor: GlobalStyles.colors.green400,
-          })}
-        >
-          <BottomTab.Screen
-            name="Message"
-            component={MessageStackScreen}
-            options={{
-              title: "Messages",
-              headerShown: false,
-              tabBarIconStyle: {
-                alignSelf: "center",
-                marginBottom: 0,
+      {session && session.user && (
+        <NavigationContainer>
+          <BottomTab.Navigator
+            initialRouteName="Explore"
+            screenOptions={({ navigation }) => ({
+              headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
+              headerTintColor: GlobalStyles.colors.primary50,
+              tabBarStyle: {
+                backgroundColor: GlobalStyles.colors.primary500,
               },
-              tabBarLabelStyle: {
-                display: "none", 
-              },
-              tabBarIcon: ({ focused, color, size }) => (
-                <Feather
-                  name="message-square"
-                  size={size}
-                  color={
-                    focused
-                      ? GlobalStyles.colors.green400
-                      : GlobalStyles.colors.primary50
-                  }
-                />
-              ),
-            }}
-          />
-          <BottomTab.Screen
-            name="Explore"
-            component={ExploreStackScreen}
-            options={{
-              headerShown: false,
-              tabBarIconStyle: {
-                alignSelf: "center",
-                marginBottom: 0,
-              },
-              tabBarLabelStyle: {
-                display: "none",
-              },
-              tabBarIcon: ({ focused, color, size }) => (
-                <Feather
-                  name="users"
-                  size={size}
-                  color={
-                    focused
-                      ? GlobalStyles.colors.green400
-                      : GlobalStyles.colors.primary50
-                  }
-                />
-              ),
-            }}
-          />
-          <BottomTab.Screen
-            name="Profile"
-            component={ProfileStackScreen}
-            options={{
-              headerShown: false,
-              tabBarIconStyle: {
-                alignSelf: "center",
-                marginBottom: 0,
-              },
-              tabBarLabelStyle: {
-                display: "none",
-              },
-              tabBarIcon: ({ focused, color, size }) => (
-                <Feather
-                  name="user"
-                  size={size}
-                  color={
-                    focused
-                      ? GlobalStyles.colors.green400
-                      : GlobalStyles.colors.primary50
-                  }
-                />
-              ),
-            }}
-          />
-        </BottomTab.Navigator>
-      </NavigationContainer>
+              tabBarActiveTintColor: GlobalStyles.colors.green400,
+            })}
+          >
+            <BottomTab.Screen
+              name="Message"
+              component={MessageStackScreen}
+              options={{
+                title: "Messages",
+                headerShown: false,
+                tabBarIconStyle: {
+                  alignSelf: "center",
+                  marginBottom: 0,
+                },
+                tabBarLabelStyle: {
+                  display: "none",
+                },
+                tabBarIcon: ({ focused, color, size }) => (
+                  <Feather
+                    name="message-square"
+                    size={size}
+                    color={
+                      focused
+                        ? GlobalStyles.colors.green400
+                        : GlobalStyles.colors.primary50
+                    }
+                  />
+                ),
+              }}
+            />
+            <BottomTab.Screen
+              name="Explore"
+              component={ExploreStackScreen}
+              options={{
+                headerShown: false,
+                tabBarIconStyle: {
+                  alignSelf: "center",
+                  marginBottom: 0,
+                },
+                tabBarLabelStyle: {
+                  display: "none",
+                },
+                tabBarIcon: ({ focused, color, size }) => (
+                  <Feather
+                    name="users"
+                    size={size}
+                    color={
+                      focused
+                        ? GlobalStyles.colors.green400
+                        : GlobalStyles.colors.primary50
+                    }
+                  />
+                ),
+              }}
+            />
+            <BottomTab.Screen
+              name="Profile"
+              component={ProfileStackScreen}
+              options={{
+                headerShown: false,
+                tabBarIconStyle: {
+                  alignSelf: "center",
+                  marginBottom: 0,
+                },
+                tabBarLabelStyle: {
+                  display: "none",
+                },
+                tabBarIcon: ({ focused, color, size }) => (
+                  <Feather
+                    name="user"
+                    size={size}
+                    color={
+                      focused
+                        ? GlobalStyles.colors.green400
+                        : GlobalStyles.colors.primary50
+                    }
+                  />
+                ),
+              }}
+            />
+          </BottomTab.Navigator>
+        </NavigationContainer>
+      )}
     </>
   );
 }

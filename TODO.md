@@ -28,11 +28,9 @@
 # Charles
 
 - top nav bar - Charles
-  x - pull up friend request list screen from notifications icon
 - message page
-  x - layout
+- friend request layout
 - login page
 - register page
-- friend request layout
 
 # Bronson

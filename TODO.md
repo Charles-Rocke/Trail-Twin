@@ -8,9 +8,10 @@
 - maybe instead of having a list row of friends, have a chat automatically created with the friend when accepting a friend request, this way the chat list will also serve as a friends list - idea
 - make edit profile buttons functions
 - logo
+- dark mode?
+- finished rough draft of app - checkpoint
 - refine UI
 - refine color scheme
-- dark mode
 - deploy to app store
 
 

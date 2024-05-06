@@ -1,12 +1,12 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import ProfileCard from "../Components/User/ProfileCard";
+import { useSelector } from "react-redux";
 
-
-const user = {
+const userObj = {
   id: 1,
   name: "Bud Dozer",
-  username: 'budflippy',
+  username: "budflippy",
   images: [
     {
       id: 1,
@@ -26,6 +26,10 @@ const user = {
 };
 
 function ProfileScreen({ navigation }) {
+  const userFromRedux = useSelector((state) => state.auth.user);
+
+  // Use the user object from Redux, or fall back to the static user object
+  const user = userFromRedux || userObj;
   return (
     <View style={styles.container}>
       <ProfileCard user={user} />

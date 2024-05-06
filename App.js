@@ -14,6 +14,7 @@ import FilterButton from "./Components/ui/FilterButton";
 import SearchButton from "./Components/ui/SearchButton";
 import Auth from "./Components/Auth/Auth";
 
+import { useSelector } from "react-redux";
 import { StatusBar } from "expo-status-bar";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -163,8 +164,7 @@ export default function App() {
       {!session ? (
         <Auth />
       ) : (
-        session.user &&
-        console.log(session.user) && (
+        session.user && (
           <NavigationContainer>
             <BottomTab.Navigator
               initialRouteName="Explore"

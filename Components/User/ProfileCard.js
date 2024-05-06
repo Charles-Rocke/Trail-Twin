@@ -5,10 +5,11 @@ import EditButton from "../ui/EditButton";
 import Carousel from "../ui/Carousel";
 
 function ProfileCard({ user }) {
+  console.log("User: ", user);
   return (
     <Card style={styles.card}>
-      <View >
-        <Carousel images={user.images} showEditButton={true}/>
+      <View>
+        <Carousel images={user.images} showEditButton={true} />
       </View>
       <Card.Content>
         <Text style={styles.title}>{user.name}</Text>

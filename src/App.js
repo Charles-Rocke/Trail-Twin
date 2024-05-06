@@ -1,24 +1,24 @@
-import ExploreScreen from "./screens/ExploreScreen";
-import MessageScreen from "./screens/Messages/MessageScreen";
-import ProfileScreen from "./screens/ProfileScreen";
-import FilterScreen from "./screens/FilterScreen";
-import SettingsScreen from "./screens/SettingsScreen";
-import SearchScreen from "./screens/SearchScreen";
-import ChatScreen from "./screens/Messages/ChatScreen";
-import NotificationIcon from "./Components/ui/NotificationIcon";
-import NotificationScreen from "./screens/NotificationScreen";
+import ExploreScreen from "../screens/ExploreScreen";
+import MessageScreen from "../screens/Messages/MessageScreen";
+import ProfileScreen from "../screens/ProfileScreen";
+import FilterScreen from "../screens/FilterScreen";
+import SettingsScreen from "../screens/SettingsScreen";
+import SearchScreen from "../screens/SearchScreen";
+import ChatScreen from "../screens/Messages/ChatScreen";
+import NotificationIcon from "../Components/ui/NotificationIcon";
+import NotificationScreen from "../screens/NotificationScreen";
 
-import SettingsButton from "./Components/ui/SettingsButton";
-import FilterButton from "./Components/ui/FilterButton";
-import SearchButton from "./Components/ui/SearchButton";
-import Auth from "./Components/Auth/Auth";
+import SettingsButton from "../Components/ui/SettingsButton";
+import FilterButton from "../Components/ui/FilterButton";
+import SearchButton from "../Components/ui/SearchButton";
+import Auth from "../Components/Auth/Auth";
 
 import { StatusBar } from "expo-status-bar";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
-import { GlobalStyles } from "./constants/styles";
+import { GlobalStyles } from "../constants/styles";
 import { Session } from "@supabase/supabase-js";
 
 const BottomTab = createBottomTabNavigator();

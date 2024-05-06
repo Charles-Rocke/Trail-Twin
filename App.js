@@ -1,3 +1,4 @@
+import "react-native-url-polyfill/auto";
 import ExploreScreen from "./screens/ExploreScreen";
 import MessageScreen from "./screens/Messages/MessageScreen";
 import ProfileScreen from "./screens/ProfileScreen";
@@ -19,6 +20,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
 import { GlobalStyles } from "./constants/styles";
+import { useEffect, useState } from "react";
+import { supabase } from "./lib/supabase";
 import { Session } from "@supabase/supabase-js";
 
 const BottomTab = createBottomTabNavigator();
@@ -143,7 +146,7 @@ function ExploreStackScreen({ navigation }) {
 }
 
 export default function App() {
-  const [session, setSession] = (useState < Session) | (null > null);
+  const [session, setSession] = useState(null);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {

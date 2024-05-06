@@ -146,6 +146,7 @@ function ExploreStackScreen({ navigation }) {
 }
 
 export default function App() {
+  console.log(process.env.YOUR_REACT_NATIVE_SUPABASE_URL);
   const [session, setSession] = useState(null);
 
   useEffect(() => {

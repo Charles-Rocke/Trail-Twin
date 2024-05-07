@@ -148,7 +148,8 @@ function ExploreStackScreen({ navigation }) {
 
 export default function App() {
   const [session, setSession] = useState(null);
-
+  const [user, setUser] = useState({});
+  console.log("this.user:", user);
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
@@ -157,6 +158,11 @@ export default function App() {
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
     });
+
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setUser(user);
+    });
+    // set user
   }, []);
   return (
     <>

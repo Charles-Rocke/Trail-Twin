@@ -9,8 +9,8 @@ function UserCard({ user }) {
     <Card style={styles.userCard}>
       <Carousel images={user.images} showEditButton={false} />
       <Card.Content>
-          <Text style={styles.name}>{user.name}</Text>
-          <Text style={ {margin: 4} }>@{user.username}</Text>
+        <Text style={styles.name}>{user.name}</Text>
+        <Text style={{ margin: 4 }}>@{user.username}</Text>
         <Text style={styles.title}>Bio</Text>
         <List.Item description={user.bio} />
         <Text style={styles.title}>Activities</Text>

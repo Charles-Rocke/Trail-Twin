@@ -1,4 +1,5 @@
 import "react-native-url-polyfill/auto";
+
 import ExploreScreen from "./screens/ExploreScreen";
 import MessageScreen from "./screens/Messages/MessageScreen";
 import ProfileScreen from "./screens/ProfileScreen";
@@ -6,15 +7,20 @@ import FilterScreen from "./screens/FilterScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 import SearchScreen from "./screens/SearchScreen";
 import ChatScreen from "./screens/Messages/ChatScreen";
-import NotificationIcon from "./Components/ui/NotificationIcon";
 import NotificationScreen from "./screens/NotificationScreen";
 
+import NotificationIcon from "./Components/ui/NotificationIcon";
+import Auth from "./Components/Auth/Auth";
 import SettingsButton from "./Components/ui/SettingsButton";
 import FilterButton from "./Components/ui/FilterButton";
 import SearchButton from "./Components/ui/SearchButton";
-import Auth from "./Components/Auth/Auth";
 
-import { useSelector } from "react-redux";
+import Store from "./src/Store";
+
+import { AppRegistry } from "react-native";
+import { name as appName } from "./app.json";
+import { Provider as ReduxProvider, useDispatch } from "react-redux";
+import { Provider as PaperProvider } from "react-native-paper";
 import { StatusBar } from "expo-status-bar";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -24,11 +30,35 @@ import { GlobalStyles } from "./constants/styles";
 import { useEffect, useState } from "react";
 import { supabase } from "./lib/supabase";
 import { Session } from "@supabase/supabase-js";
+import { updateUserSession } from "./src/slices/authSlice";
 
 const BottomTab = createBottomTabNavigator();
 const ProfileStack = createNativeStackNavigator();
 const ExploreStack = createNativeStackNavigator();
 const MessageStack = createNativeStackNavigator();
+const AuthStack = createNativeStackNavigator();
+
+function AuthStackScreen({ navigation }) {
+  return (
+    <AuthStack.Navigator
+      screenOptions={({ navigation }) => ({
+        headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
+        headerTintColor: GlobalStyles.colors.primary50,
+        tabBarStyle: { backgroundColor: GlobalStyles.colors.primary500 },
+        tabBarActiveTintColor: GlobalStyles.colors.green400,
+      })}
+    >
+      <AuthStack.Screen
+        name="AuthScreen"
+        component={Auth}
+        options={{
+          title: "Login",
+          headerBackTitleStyle: { fontSize: 30 },
+        }}
+      />
+    </AuthStack.Navigator>
+  );
+}
 
 function MessageStackScreen({ navigation }) {
   return (
@@ -146,125 +176,153 @@ function ExploreStackScreen({ navigation }) {
   );
 }
 
-export default function App() {
+function Main() {
+  return (
+    <NavigationContainer>
+      <BottomTab.Navigator
+        initialRouteName="Explore"
+        screenOptions={({ navigation }) => ({
+          headerStyle: {
+            backgroundColor: GlobalStyles.colors.primary500,
+          },
+          headerTintColor: GlobalStyles.colors.primary50,
+          tabBarStyle: {
+            backgroundColor: GlobalStyles.colors.primary500,
+          },
+          tabBarActiveTintColor: GlobalStyles.colors.green400,
+        })}
+      >
+        <BottomTab.Screen
+          name="Message"
+          component={MessageStackScreen}
+          options={{
+            title: "Messages",
+            headerShown: false,
+            tabBarIconStyle: {
+              alignSelf: "center",
+              marginBottom: 0,
+            },
+            tabBarLabelStyle: {
+              display: "none",
+            },
+            tabBarIcon: ({ focused, color, size }) => (
+              <Feather
+                name="message-square"
+                size={size}
+                color={
+                  focused
+                    ? GlobalStyles.colors.green400
+                    : GlobalStyles.colors.primary50
+                }
+              />
+            ),
+          }}
+        />
+        <BottomTab.Screen
+          name="Explore"
+          component={ExploreStackScreen}
+          options={{
+            headerShown: false,
+            tabBarIconStyle: {
+              alignSelf: "center",
+              marginBottom: 0,
+            },
+            tabBarLabelStyle: {
+              display: "none",
+            },
+            tabBarIcon: ({ focused, color, size }) => (
+              <Feather
+                name="users"
+                size={size}
+                color={
+                  focused
+                    ? GlobalStyles.colors.green400
+                    : GlobalStyles.colors.primary50
+                }
+              />
+            ),
+          }}
+        />
+        <BottomTab.Screen
+          name="Profile"
+          component={ProfileStackScreen}
+          options={{
+            headerShown: false,
+            tabBarIconStyle: {
+              alignSelf: "center",
+              marginBottom: 0,
+            },
+            tabBarLabelStyle: {
+              display: "none",
+            },
+            tabBarIcon: ({ focused, color, size }) => (
+              <Feather
+                name="user"
+                size={size}
+                color={
+                  focused
+                    ? GlobalStyles.colors.green400
+                    : GlobalStyles.colors.primary50
+                }
+              />
+            ),
+          }}
+        />
+      </BottomTab.Navigator>
+    </NavigationContainer>
+  );
+}
+
+function App() {
   const [session, setSession] = useState(null);
-  const [user, setUser] = useState({});
-  console.log("this.user:", user);
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    const fetchSession = async () => {
+      const session = supabase.auth.session();
       setSession(session);
-    });
+      if (session) {
+        dispatch(updateUserSession(session.user));
+      }
+    };
 
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
+    fetchSession();
 
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      setUser(user);
-    });
-    // set user
-  }, []);
+    const { data: authListener } = supabase.auth.onAuthStateChange(
+      async (_event, session) => {
+        setSession(session);
+        if (session) {
+          dispatch(updateUserSession(session.user));
+        } else {
+          dispatch(logout());
+        }
+      }
+    );
+
+    return () => authListener.unsubscribe();
+  }, [dispatch]);
+
   return (
     <>
-      <StatusBar style="light" />
       {!session ? (
-        <Auth />
+        <NavigationContainer>
+          <AuthStackScreen />
+        </NavigationContainer>
       ) : (
-        session.user && (
-          <NavigationContainer>
-            <BottomTab.Navigator
-              initialRouteName="Explore"
-              screenOptions={({ navigation }) => ({
-                headerStyle: {
-                  backgroundColor: GlobalStyles.colors.primary500,
-                },
-                headerTintColor: GlobalStyles.colors.primary50,
-                tabBarStyle: {
-                  backgroundColor: GlobalStyles.colors.primary500,
-                },
-                tabBarActiveTintColor: GlobalStyles.colors.green400,
-              })}
-            >
-              <BottomTab.Screen
-                name="Message"
-                component={MessageStackScreen}
-                options={{
-                  title: "Messages",
-                  headerShown: false,
-                  tabBarIconStyle: {
-                    alignSelf: "center",
-                    marginBottom: 0,
-                  },
-                  tabBarLabelStyle: {
-                    display: "none",
-                  },
-                  tabBarIcon: ({ focused, color, size }) => (
-                    <Feather
-                      name="message-square"
-                      size={size}
-                      color={
-                        focused
-                          ? GlobalStyles.colors.green400
-                          : GlobalStyles.colors.primary50
-                      }
-                    />
-                  ),
-                }}
-              />
-              <BottomTab.Screen
-                name="Explore"
-                component={ExploreStackScreen}
-                options={{
-                  headerShown: false,
-                  tabBarIconStyle: {
-                    alignSelf: "center",
-                    marginBottom: 0,
-                  },
-                  tabBarLabelStyle: {
-                    display: "none",
-                  },
-                  tabBarIcon: ({ focused, color, size }) => (
-                    <Feather
-                      name="users"
-                      size={size}
-                      color={
-                        focused
-                          ? GlobalStyles.colors.green400
-                          : GlobalStyles.colors.primary50
-                      }
-                    />
-                  ),
-                }}
-              />
-              <BottomTab.Screen
-                name="Profile"
-                component={ProfileStackScreen}
-                options={{
-                  headerShown: false,
-                  tabBarIconStyle: {
-                    alignSelf: "center",
-                    marginBottom: 0,
-                  },
-                  tabBarLabelStyle: {
-                    display: "none",
-                  },
-                  tabBarIcon: ({ focused, color, size }) => (
-                    <Feather
-                      name="user"
-                      size={size}
-                      color={
-                        focused
-                          ? GlobalStyles.colors.green400
-                          : GlobalStyles.colors.primary50
-                      }
-                    />
-                  ),
-                }}
-              />
-            </BottomTab.Navigator>
-          </NavigationContainer>
-        )
+        session.user && <Main />
       )}
     </>
   );
 }
+
+export default function Root() {
+  return (
+    <ReduxProvider store={Store}>
+      <PaperProvider>
+        <App />
+      </PaperProvider>
+    </ReduxProvider>
+  );
+}
+
+AppRegistry.registerComponent(appName, () => Root);

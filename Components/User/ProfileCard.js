@@ -1,36 +1,39 @@
 import * as React from "react";
-import { StyleSheet, View } from "react-native";
-import { Card, Text } from "react-native-paper";
+import { StyleSheet, View, Text } from "react-native";
+// import { Card, Text } from "react-native-paper";
 import EditButton from "../ui/EditButton";
 import Carousel from "../ui/Carousel";
 
 function ProfileCard({ user }) {
-  console.log("User: ", user);
+  console.log("Profile Card User:", user);
   return (
-    <Card style={styles.card}>
-      <View>
-        <Carousel images={user.images} showEditButton={true} />
-      </View>
-      <Card.Content>
-        <Text style={styles.title}>{user.name}</Text>
-        <Text variant="titleSmall">@{user.username}</Text>
-        <View style={styles.row}>
-          <View style={styles.listItem}>
-            <Text style={styles.listTitle}>Bio</Text>
-            <Text>{user.bio}</Text>
-          </View>
-          <EditButton />
-        </View>
+    <View>
+      <Text>User Profile Card</Text>
+    </View>
+    // <Card style={styles.card}>
+    //   <View>
+    //     <Carousel images={user.images} showEditButton={true} />
+    //   </View>
+    //   <Card.Content>
+    //     <Text style={styles.title}>{user.name}</Text>
+    //     <Text variant="titleSmall">@{user.username}</Text>
+    //     <View style={styles.row}>
+    //       <View style={styles.listItem}>
+    //         <Text style={styles.listTitle}>Bio</Text>
+    //         <Text>{user.bio}</Text>
+    //       </View>
+    //       <EditButton />
+    //     </View>
 
-        <View style={styles.row}>
-          <View style={styles.listItem}>
-            <Text style={styles.listTitle}>Activities</Text>
-            <Text>{user.activities.join(", ")}</Text>
-          </View>
-          <EditButton />
-        </View>
-      </Card.Content>
-    </Card>
+    //     <View style={styles.row}>
+    //       <View style={styles.listItem}>
+    //         <Text style={styles.listTitle}>Activities</Text>
+    //         <Text>{user.activities.join(", ")}</Text>
+    //       </View>
+    //       <EditButton />
+    //     </View>
+    //   </Card.Content>
+    // </Card>
   );
 }
 

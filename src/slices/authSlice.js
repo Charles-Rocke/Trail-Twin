@@ -1,7 +1,7 @@
-// authSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { supabase } from "../../lib/supabase"; // Ensure you have initialized Supabase client
+import { supabase } from "../../lib/supabase";
 
+// Login action
 export const login = createAsyncThunk(
   "auth/login",
   async ({ email, password }) => {
@@ -13,20 +13,46 @@ export const login = createAsyncThunk(
   }
 );
 
+// update User session
+export const updateUserSession = createAsyncThunk(
+  "auth/updateUserSession",
+  async (userSession) => {
+    // You can return the userSession object directly since it already contains the necessary information
+    return userSession;
+  }
+);
+
+// Logout action
 export const logout = createAsyncThunk("auth/logout", async () => {
   const { error } = await supabase.auth.signOut();
   return null;
 });
 
+// Fetch user details action
+export const fetchUserDetails = createAsyncThunk(
+  "user/fetchUserDetails",
+  async (userId) => {
+    const { data, error } = await supabase
+      .from("users")
+      .select("*")
+      .eq("id", userId)
+      .single();
+    if (error) throw error;
+    return data;
+  }
+);
+
+// Initial state
 const initialState = {
   isAuthenticated: false,
   user: null,
 };
 
-export const authSlice = createSlice({
+// Slice definition
+const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {}, // No reducers needed for async thunks
   extraReducers: (builder) => {
     builder
       .addCase(login.fulfilled, (state, action) => {
@@ -36,6 +62,13 @@ export const authSlice = createSlice({
       .addCase(logout.fulfilled, (state) => {
         state.isAuthenticated = false;
         state.user = null;
+      })
+      .addCase(fetchUserDetails.fulfilled, (state, action) => {
+        state.user = action.payload;
+      })
+      .addCase(updateUserSession.fulfilled, (state, action) => {
+        state.isAuthenticated = true;
+        state.user = action.payload;
       });
   },
 });

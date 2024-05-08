@@ -6,7 +6,7 @@ const users = [
   {
     id: 1,
     name: "John Doe",
-    username: 'DangoDo',
+    username: "DangoDo",
     images: [
       {
         id: 1,
@@ -31,7 +31,7 @@ const users = [
   {
     id: 2,
     name: "Michael",
-    username: 'mcGamer',
+    username: "mcGamer",
     images: [
       {
         id: 1,
@@ -53,7 +53,9 @@ const users = [
 ];
 
 function ExploreScreen() {
-  const renderItem = ({ item }) => <UserCard user={item} />; // Pass user data as prop to UserCard
+  function renderItem({ item }) {
+    return <UserCard user={item} />;
+  } // Pass user data as prop to UserCard
 
   return (
     <View style={styles.container}>

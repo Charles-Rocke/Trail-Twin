@@ -5,7 +5,7 @@ import { Button, Input } from "react-native-elements";
 
 export default function Auth() {
   const [email, setEmail] = useState("abc123@abc123.com");
-  const [firstName, setFirstName] = useState("C");
+  const [firstName, setFirstName] = useState("Jerry Cola");
   const [password, setPassword] = useState("HandOfHades");
   const [loading, setLoading] = useState(false);
 
@@ -13,7 +13,6 @@ export default function Auth() {
     setLoading(true);
     const { error } = await supabase.auth.signInWithPassword({
       email: email,
-      firstName: firstName,
       password: password,
     });
 
@@ -29,7 +28,6 @@ export default function Auth() {
     } = await supabase.auth.signUp({
       email: email,
       password: password,
-      firstName: firstName,
     });
 
     if (error) Alert.alert(error.message);
@@ -40,16 +38,6 @@ export default function Auth() {
 
   return (
     <View style={styles.container}>
-      <View style={[styles.verticallySpaced, styles.mt20]}>
-        <Input
-          label="First name"
-          leftIcon={{ type: "font-awesome", name: "user" }}
-          onChangeText={(text) => setFirstName(text)}
-          value={firstName}
-          placeholder="John"
-          autoCapitalize={"words"}
-        />
-      </View>
       <View style={[styles.verticallySpaced]}>
         <Input
           label="Email"

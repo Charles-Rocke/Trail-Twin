@@ -1,7 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import ProfileCard from "../Components/User/ProfileCard";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { supabase } from "../lib/supabase";
+
+function ProfileScreen({ navigation }) {
+  // Use useSelector to access the user data from the Redux store
+  const user = useSelector((state) => state.auth.user);
+  return (
+    <View style={styles.container}>
+      <ProfileCard user={user} />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+  },
+});
+
+export default ProfileScreen;
 
 const userObj = {
   id: 1,
@@ -21,27 +41,6 @@ const userObj = {
       uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Hiking_to_the_Ice_Lakes._San_Juan_National_Forest%2C_Colorado.jpg/1200px-Hiking_to_the_Ice_Lakes._San_Juan_National_Forest%2C_Colorado.jpg",
     },
   ],
-  bio: " Skiing | Sending big backflips! ",
+  bio: "Skiing | Sending big backflips!",
   activities: ["Skiing", "Backcountry Skiing"],
 };
-
-function ProfileScreen({ navigation }) {
-  const userFromRedux = useSelector((state) => state.auth.user);
-
-  // Use the user object from Redux, or fall back to the static user object
-  const user = userFromRedux || userObj;
-  return (
-    <View style={styles.container}>
-      <ProfileCard user={user} />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-});
-
-export default ProfileScreen;

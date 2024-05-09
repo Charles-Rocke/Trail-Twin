@@ -1,3 +1,4 @@
+import "react-native-reanimated";
 import "react-native-url-polyfill/auto";
 
 import ExploreScreen from "./screens/ExploreScreen";
@@ -79,7 +80,7 @@ function MessageStackScreen({ navigation }) {
         component={MessageScreen}
         options={{
           title: "Messages",
-          headerBackTitle: "Custom Back", // Customize the back button label
+          headerBackTitle: "Back", // Customize the back button label
           headerBackTitleStyle: { fontSize: 30 },
           headerRight: () => {
             return (
@@ -182,98 +183,96 @@ function ExploreStackScreen({ navigation }) {
 
 function Main() {
   return (
-    <NavigationContainer>
-      <BottomTab.Navigator
-        initialRouteName="Explore"
-        screenOptions={({ navigation }) => ({
-          headerStyle: {
-            backgroundColor: GlobalStyles.colors.primary500,
+    <BottomTab.Navigator
+      initialRouteName="Explore"
+      screenOptions={({ navigation }) => ({
+        headerStyle: {
+          backgroundColor: GlobalStyles.colors.primary500,
+        },
+        headerTintColor: GlobalStyles.colors.primary50,
+        tabBarStyle: {
+          backgroundColor: GlobalStyles.colors.primary500,
+        },
+        tabBarActiveTintColor: GlobalStyles.colors.green400,
+      })}
+    >
+      <BottomTab.Screen
+        name="Message"
+        component={MessageStackScreen}
+        options={{
+          title: "Messages",
+          headerShown: false,
+          tabBarIconStyle: {
+            alignSelf: "center",
+            marginBottom: 0,
           },
-          headerTintColor: GlobalStyles.colors.primary50,
-          tabBarStyle: {
-            backgroundColor: GlobalStyles.colors.primary500,
+          tabBarLabelStyle: {
+            display: "none",
           },
-          tabBarActiveTintColor: GlobalStyles.colors.green400,
-        })}
-      >
-        <BottomTab.Screen
-          name="Message"
-          component={MessageStackScreen}
-          options={{
-            title: "Messages",
-            headerShown: false,
-            tabBarIconStyle: {
-              alignSelf: "center",
-              marginBottom: 0,
-            },
-            tabBarLabelStyle: {
-              display: "none",
-            },
-            tabBarIcon: ({ focused, color, size }) => (
-              <Feather
-                name="message-square"
-                size={size}
-                color={
-                  focused
-                    ? GlobalStyles.colors.green400
-                    : GlobalStyles.colors.primary50
-                }
-              />
-            ),
-          }}
-        />
-        <BottomTab.Screen
-          name="Explore"
-          component={ExploreStackScreen}
-          options={{
-            headerShown: false,
-            tabBarIconStyle: {
-              alignSelf: "center",
-              marginBottom: 0,
-            },
-            tabBarLabelStyle: {
-              display: "none",
-            },
-            tabBarIcon: ({ focused, color, size }) => (
-              <Feather
-                name="users"
-                size={size}
-                color={
-                  focused
-                    ? GlobalStyles.colors.green400
-                    : GlobalStyles.colors.primary50
-                }
-              />
-            ),
-          }}
-        />
-        <BottomTab.Screen
-          name="Profile"
-          component={ProfileStackScreen}
-          options={{
-            headerShown: false,
-            tabBarIconStyle: {
-              alignSelf: "center",
-              marginBottom: 0,
-            },
-            tabBarLabelStyle: {
-              display: "none",
-            },
-            tabBarIcon: ({ focused, color, size }) => (
-              <Feather
-                name="user"
-                size={size}
-                color={
-                  focused
-                    ? GlobalStyles.colors.green400
-                    : GlobalStyles.colors.primary50
-                }
-              />
-            ),
-          }}
-        />
-      </BottomTab.Navigator>
-    </NavigationContainer>
+          tabBarIcon: ({ focused, color, size }) => (
+            <Feather
+              name="message-square"
+              size={size}
+              color={
+                focused
+                  ? GlobalStyles.colors.green400
+                  : GlobalStyles.colors.primary50
+              }
+            />
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        name="Explore"
+        component={ExploreStackScreen}
+        options={{
+          headerShown: false,
+          tabBarIconStyle: {
+            alignSelf: "center",
+            marginBottom: 0,
+          },
+          tabBarLabelStyle: {
+            display: "none",
+          },
+          tabBarIcon: ({ focused, color, size }) => (
+            <Feather
+              name="users"
+              size={size}
+              color={
+                focused
+                  ? GlobalStyles.colors.green400
+                  : GlobalStyles.colors.primary50
+              }
+            />
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        name="Profile"
+        component={ProfileStackScreen}
+        options={{
+          headerShown: false,
+          tabBarIconStyle: {
+            alignSelf: "center",
+            marginBottom: 0,
+          },
+          tabBarLabelStyle: {
+            display: "none",
+          },
+          tabBarIcon: ({ focused, color, size }) => (
+            <Feather
+              name="user"
+              size={size}
+              color={
+                focused
+                  ? GlobalStyles.colors.green400
+                  : GlobalStyles.colors.primary50
+              }
+            />
+          ),
+        }}
+      />
+    </BottomTab.Navigator>
   );
 }
 
@@ -287,7 +286,9 @@ function App() {
           <AuthStackScreen />
         </NavigationContainer>
       ) : (
-        <Main />
+        <NavigationContainer>
+          <Main />
+        </NavigationContainer>
       )}
     </>
   );
@@ -297,6 +298,7 @@ export default function Root() {
   return (
     <ReduxProvider store={Store}>
       <PaperProvider>
+        <StatusBar style="light" />
         <App />
       </PaperProvider>
     </ReduxProvider>

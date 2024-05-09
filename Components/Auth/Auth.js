@@ -14,37 +14,29 @@ export default function Auth() {
   const handleSignIn = async () => {
     setLoading(true);
     try {
-      await dispatch(login({ email, password }));
+      console.log({ email, password });
+      await dispatch(login({ email, password })); // Ensuring the promise is handled correctly
+      console.log("Completed dispatching login");
     } catch (error) {
       Alert.alert("Login Failed", error.message);
+    } finally {
+      setLoading(false); // Ensures that loading is always turned off after operation
     }
-    setLoading(false);
   };
 
   async function signUpWithEmail() {
-    setLoading(true);
-    const { error } = await supabase.auth.signUp({
-      email: email,
-      password: password,
-    });
-
-    if (error) {
-      Alert.alert(error.message);
-    } else {
-      // Automatically log in the user after signup
-      const { error: loginError } = await supabase.auth.signInWithPassword({
-        email: email,
-        password: password,
-      });
-
-      if (loginError) {
-        Alert.alert("Login after signup failed", loginError.message);
-      } else {
-        // Dispatch the login action here
-        dispatch(login({ email, password }));
-      }
+    setLoading(true); // Start loading state
+    try {
+      // Gather email and password
+      const userData = { email, password };
+      // Dispatch the signup action with the user data
+      await dispatch(signup(userData));
+      Alert.alert("Signup Successful", "You are now logged in!");
+    } catch (error) {
+      Alert.alert("Signup or Login Failed", error.message);
+    } finally {
+      setLoading(false); // Ensure loading state is reset
     }
-    setLoading(false);
   }
 
   return (

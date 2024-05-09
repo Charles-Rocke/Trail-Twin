@@ -3,6 +3,7 @@ import Stories from "../../Components/ui/Stories";
 import MessageSection from "../../Components/ui/Messages/MessageSection";
 
 function MessageScreen() {
+  console.log("Message Screen");
   return (
     <>
       <View style={styles.storiesContainer}>

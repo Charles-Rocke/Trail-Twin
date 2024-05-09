@@ -1,6 +1,7 @@
 import { Text, View, StyleSheet, FlatList, ScrollView } from "react-native";
 import UserCard from "../Components/User/UserCard";
 import ProfileImg from "../assets/images/profileImg.png";
+import { useSelector } from "react-redux";
 
 const users = [
   {
@@ -53,6 +54,8 @@ const users = [
 ];
 
 function ExploreScreen() {
+  const user = useSelector((state) => state.auth.user);
+  console.log("User:", user);
   function renderItem({ item }) {
     return <UserCard user={item} />;
   } // Pass user data as prop to UserCard

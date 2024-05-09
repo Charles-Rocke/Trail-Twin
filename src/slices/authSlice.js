@@ -16,47 +16,35 @@ export const updateUserSession = createAsyncThunk(
 
 export const signup = createAsyncThunk(
   "auth/signup",
-  async ({ email, password }, { dispatch }) => {
+  async function handleUserAuthentication({ email, password }, { dispatch }) {
     try {
-      const { user: signUpUser, error: signUpError } =
-        await supabase.auth.signUp({
-          email,
-          password,
-        });
+      const { user, session, error } = await supabase.auth.signUp({
+        email,
+        password,
+      });
 
-      if (signUpError) {
-        throw new Error(signUpError.message); // Log or display the original error message
+      if (error) {
+        throw new Error(error.message);
       }
 
-      if (signUpUser) {
-        // If the user is created, attempt to log in right after signup
-        const { user: loginUser, error: loginError } =
-          await supabase.auth.signIn({
-            email,
-            password,
-          });
-
-        if (loginError) {
-          throw new Error(loginError.message); // Log or display the original error message
-        }
-
-        if (loginUser) {
-          // Dispatch updateUserSession action right here after successful login
-          dispatch(
-            updateUserSession({
-              id: loginUser.id,
-              email: loginUser.email,
-              role: loginUser.role, // Assuming your user object contains 'role'
-              confirmedAt: loginUser.confirmed_at, // Assuming your user object contains 'confirmed_at'
-            })
-          );
-
-          // Navigate or show success message after successful login
-          // Example using React Navigation
-          // navigation.navigate('Home');
-          // Or using a simple alert
-          alert("Signup and login successful!");
-        }
+      // If the signup is successful, attempt to log in the user
+      if (user && !session) {
+        // Since Supabase sometimes does not create a session immediately after signup,
+        // we perform a login to establish the session
+        return dispatch(login({ email, password })).then((response) => {
+          if (response.error) {
+            throw new Error(response.error.message);
+          }
+          return response.payload; // Return the payload from the login action
+        });
+      } else if (session) {
+        // If there is a session, we update the user session in Redux directly
+        return {
+          id: user.id,
+          email: user.email,
+          role: user.role,
+          confirmedAt: user.confirmed_at,
+        };
       }
     } catch (error) {
       throw new Error("Signup or login failed: " + error.message);
@@ -66,33 +54,39 @@ export const signup = createAsyncThunk(
 
 export const login = createAsyncThunk(
   "auth/login",
-  async ({ email, password }, { dispatch }) => {
+  async function handleUserAuthentication({ email, password }, { dispatch }) {
+    console.log("In handleUserAuth thunk:", { email, password });
     try {
-      const { user, error } = await supabase.auth.signInWithPassword({
+      const {
+        data: { user, session },
+        error,
+      } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
-      if (error) throw new Error(error.message);
+      console.log("Got user, session, error:", user, session, error);
+      if (error) console.log("Error:", error);
 
-      if (user) {
-        // Dispatch updateUserSession action right here after successful login
-        dispatch(
-          updateUserSession({
-            id: user.id,
-            email: user.email,
-            role: user.role,
-            confirmedAt: user.confirmed_at,
-          })
-        );
+      if (session && user) {
+        console.log("Session: ", session);
+        console.log("User: ", user);
+        // Extract necessary data from the session object
+        return {
+          id: user.id,
+          email: user.email,
+          role: user.role,
+          confirmedAt: user.confirmed_at,
+        };
       }
     } catch (error) {
-      // You can also handle errors more elegantly here, potentially dispatching another action for errors
+      console.log(error);
       throw new Error("Login failed: " + error.message);
     }
   }
 );
 
 export const logout = createAsyncThunk("auth/logout", async () => {
+  console.log("logging out");
   const { error } = await supabase.auth.signOut();
   console.log("Error in logout thunk", error);
   if (error) throw new Error(error.message);
@@ -130,16 +124,11 @@ const authSlice = createSlice({
     builder
       .addCase(signup.fulfilled, (state, action) => {
         state.isAuthenticated = true;
-        state.user = {
-          id: action.payload.id,
-          email: action.payload.email,
-          role: action.payload.role,
-          confirmedAt: action.payload.confirmedAt,
-        };
+        state.user = action.payload; // Assuming payload contains the user data
       })
       .addCase(login.fulfilled, (state, action) => {
         state.isAuthenticated = true;
-        state.user = action.payload; // Store user info from the login payload
+        state.user = action.payload;
       })
       .addCase(logout.fulfilled, (state) => {
         state.isAuthenticated = false;

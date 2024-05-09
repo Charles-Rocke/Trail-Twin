@@ -1,93 +1,83 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
-import { supabase } from "../../lib/supabase";
+import { useDispatch } from "react-redux";
 import { Button, Input } from "react-native-elements";
+import {
+  login,
+  signInWithEmail,
+  signUpWithEmail,
+} from "../../src/slices/authSlice";
 
 export default function Auth() {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("abc123@abc123.com");
-  const [firstName, setFirstName] = useState("Jerry Cola");
   const [password, setPassword] = useState("HandOfHades");
   const [loading, setLoading] = useState(false);
 
-  async function signInWithEmail() {
+  const handleSignIn = async () => {
     setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({
-      email: email,
-      password: password,
-    });
-
-    if (error) Alert.alert(error.message);
+    try {
+      await dispatch(login({ email, password }));
+    } catch (error) {
+      Alert.alert("Login Failed", error.message);
+    }
     setLoading(false);
-  }
+  };
 
-  async function signUpWithEmail() {
+  const handleSignUp = async () => {
     setLoading(true);
-    const {
-      data: { session },
-      error,
-    } = await supabase.auth.signUp({
-      email: email,
-      password: password,
-    });
-
-    if (error) Alert.alert(error.message);
-    if (!session)
-      Alert.alert("Please check your inbox for email verification!");
+    try {
+      await dispatch(signUpWithEmail({ email, password }));
+    } catch (error) {
+      Alert.alert("Signup Failed", error.message);
+    }
     setLoading(false);
-  }
+  };
 
   return (
     <View style={styles.container}>
-      <View style={[styles.verticallySpaced]}>
-        <Input
-          label="Email"
-          leftIcon={{ type: "font-awesome", name: "envelope" }}
-          onChangeText={(text) => setEmail(text)}
-          value={email}
-          placeholder="email@address.com"
-          autoCapitalize={"none"}
-        />
-      </View>
-      <View style={styles.verticallySpaced}>
-        <Input
-          label="Password"
-          leftIcon={{ type: "font-awesome", name: "lock" }}
-          onChangeText={(text) => setPassword(text)}
-          value={password}
-          secureTextEntry={true}
-          placeholder="Password"
-          autoCapitalize={"none"}
-        />
-      </View>
-      <View style={[styles.verticallySpaced, styles.mt20]}>
-        <Button
-          title="Sign in"
-          disabled={loading}
-          onPress={() => signInWithEmail()}
-        />
-      </View>
-      <View style={styles.verticallySpaced}>
-        <Button
-          title="Sign up"
-          disabled={loading}
-          onPress={() => signUpWithEmail()}
-        />
-      </View>
+      <Input
+        label="Email"
+        leftIcon={{ type: "font-awesome", name: "envelope" }}
+        onChangeText={setEmail}
+        value={email}
+        placeholder="email@address.com"
+        autoCapitalize={"none"}
+        containerStyle={styles.verticallySpaced}
+      />
+      <Input
+        label="Password"
+        leftIcon={{ type: "font-awesome", name: "lock" }}
+        onChangeText={setPassword}
+        value={password}
+        secureTextEntry={true}
+        placeholder="Password"
+        autoCapitalize={"none"}
+        containerStyle={styles.verticallySpaced}
+      />
+      <Button
+        title="Sign in"
+        disabled={loading}
+        onPress={handleSignIn}
+        containerStyle={styles.verticallySpaced}
+      />
+      <Button
+        title="Sign up"
+        disabled={loading}
+        onPress={handleSignUp}
+        containerStyle={styles.verticallySpaced}
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 40,
-    padding: 12,
+    flex: 1,
+    justifyContent: "center",
+    padding: 20,
   },
   verticallySpaced: {
-    paddingTop: 4,
-    paddingBottom: 4,
-    alignSelf: "stretch",
-  },
-  mt20: {
     marginTop: 20,
   },
 });

@@ -19,7 +19,11 @@ import Store from "./src/Store";
 
 import { AppRegistry } from "react-native";
 import { name as appName } from "./app.json";
-import { Provider as ReduxProvider, useDispatch } from "react-redux";
+import {
+  Provider as ReduxProvider,
+  useDispatch,
+  useSelector,
+} from "react-redux";
 import { Provider as PaperProvider } from "react-native-paper";
 import { StatusBar } from "expo-status-bar";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -30,7 +34,7 @@ import { GlobalStyles } from "./constants/styles";
 import { useEffect, useState } from "react";
 import { supabase } from "./lib/supabase";
 import { Session } from "@supabase/supabase-js";
-import { updateUserSession } from "./src/slices/authSlice";
+import { updateUserSession, logout } from "./src/slices/authSlice";
 
 const BottomTab = createBottomTabNavigator();
 const ProfileStack = createNativeStackNavigator();
@@ -274,42 +278,16 @@ function Main() {
 }
 
 function App() {
-  const [session, setSession] = useState(null);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    const fetchSession = async () => {
-      const session = supabase.auth.session();
-      setSession(session);
-      if (session) {
-        dispatch(updateUserSession(session.user));
-      }
-    };
-
-    fetchSession();
-
-    const { data: authListener } = supabase.auth.onAuthStateChange(
-      async (_event, session) => {
-        setSession(session);
-        if (session) {
-          dispatch(updateUserSession(session.user));
-        } else {
-          dispatch(logout());
-        }
-      }
-    );
-
-    return () => authListener.unsubscribe();
-  }, [dispatch]);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   return (
     <>
-      {!session ? (
+      {!isAuthenticated ? (
         <NavigationContainer>
           <AuthStackScreen />
         </NavigationContainer>
       ) : (
-        session.user && <Main />
+        <Main />
       )}
     </>
   );

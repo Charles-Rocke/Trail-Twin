@@ -8,8 +8,12 @@ import {
   StyleSheet,
   ScrollView,
 } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../src/slices/authSlice";
 
-const SettingsScreen = () => {
+function SettingsScreen() {
+  const dispatch = useDispatch();
+
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
@@ -18,9 +22,15 @@ const SettingsScreen = () => {
   const [isDarkModeEnabled, setIsDarkModeEnabled] = useState(false);
 
   const handlePrivacyPolicyPress = () => console.log("Privacy Policy pressed");
-  const handleTermsOfServicePress = () => console.log("Terms of Service pressed");
+  const handleTermsOfServicePress = () =>
+    console.log("Terms of Service pressed");
   const handleHelpPress = () => console.log("Help pressed");
-  const handleLogoutPress = () => console.log("Logout pressed");
+
+  function handleLogoutPress() {
+    console.log("Logout pressed");
+    dispatch(logout());
+  }
+
   const handleDeleteAccountPress = () => console.log("Delete Account pressed");
 
   return (
@@ -76,24 +86,28 @@ const SettingsScreen = () => {
       <Button title="Terms of Service" onPress={handleTermsOfServicePress} />
       <Button title="Help" onPress={handleHelpPress} />
       <Button title="Logout" onPress={handleLogoutPress} color="red" />
-      <Button title="Delete Account" onPress={handleDeleteAccountPress} color="red" />
+      <Button
+        title="Delete Account"
+        onPress={handleDeleteAccountPress}
+        color="red"
+      />
     </ScrollView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   searchContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     paddingHorizontal: 15, // Slightly increased for better spacing
     paddingVertical: 10, // Increased for a taller search bar
-    alignItems: 'center',
-    backgroundColor: '#f2f2f2', // Lighter background for a subtle contrast
+    alignItems: "center",
+    backgroundColor: "#f2f2f2", // Lighter background for a subtle contrast
     margin: 20, // Adjust margin for better spacing from screen edges
     marginTop: 50, // Additional top margin to prevent overlap with status bar/navigation
     borderRadius: 30, // Increased for rounder edges
     borderWidth: 1, // Add a border
-    borderColor: '#cccccc', // Light grey border color
-    shadowColor: '#000', // Shadow for depth, works on iOS
+    borderColor: "#cccccc", // Light grey border color
+    shadowColor: "#000", // Shadow for depth, works on iOS
     shadowOffset: {
       width: 0,
       height: 2,
@@ -108,21 +122,21 @@ const styles = StyleSheet.create({
     marginLeft: 16,
   },
   title: {
-    padding: 2, 
+    padding: 2,
     marginLeft: 16,
   },
   switchContainer: {
     margin: 8,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     flex: 1,
   },
   input: {
     margin: 12,
     flex: 1,
     marginRight: 10, // Keep as is for spacing between the input and the button
-    backgroundColor: '#ffffff', // Pure white background for the input field
+    backgroundColor: "#ffffff", // Pure white background for the input field
     borderRadius: 5, // Rounded edges for the input field
     paddingHorizontal: 15, // Inner spacing for the text
     fontSize: 16, // Slightly larger text for better readability

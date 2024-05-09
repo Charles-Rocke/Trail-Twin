@@ -2,11 +2,8 @@ import { useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import { useDispatch } from "react-redux";
 import { Button, Input } from "react-native-elements";
-import {
-  login,
-  signInWithEmail,
-  signUpWithEmail,
-} from "../../src/slices/authSlice";
+import { login } from "../../src/slices/authSlice";
+import { supabase } from "../../lib/supabase";
 
 export default function Auth() {
   const dispatch = useDispatch();
@@ -24,15 +21,31 @@ export default function Auth() {
     setLoading(false);
   };
 
-  const handleSignUp = async () => {
+  async function signUpWithEmail() {
     setLoading(true);
-    try {
-      await dispatch(signUpWithEmail({ email, password }));
-    } catch (error) {
-      Alert.alert("Signup Failed", error.message);
+    const { error } = await supabase.auth.signUp({
+      email: email,
+      password: password,
+    });
+
+    if (error) {
+      Alert.alert(error.message);
+    } else {
+      // Automatically log in the user after signup
+      const { error: loginError } = await supabase.auth.signInWithPassword({
+        email: email,
+        password: password,
+      });
+
+      if (loginError) {
+        Alert.alert("Login after signup failed", loginError.message);
+      } else {
+        // Dispatch the login action here
+        dispatch(login({ email, password }));
+      }
     }
     setLoading(false);
-  };
+  }
 
   return (
     <View style={styles.container}>
@@ -64,7 +77,7 @@ export default function Auth() {
       <Button
         title="Sign up"
         disabled={loading}
-        onPress={handleSignUp}
+        onPress={signUpWithEmail}
         containerStyle={styles.verticallySpaced}
       />
     </View>

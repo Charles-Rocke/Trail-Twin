@@ -14,6 +14,56 @@ export const updateUserSession = createAsyncThunk(
   }
 );
 
+export const signup = createAsyncThunk(
+  "auth/signup",
+  async ({ email, password }, { dispatch }) => {
+    try {
+      const { user: signUpUser, error: signUpError } =
+        await supabase.auth.signUp({
+          email,
+          password,
+        });
+
+      if (signUpError) {
+        throw new Error(signUpError.message); // Log or display the original error message
+      }
+
+      if (signUpUser) {
+        // If the user is created, attempt to log in right after signup
+        const { user: loginUser, error: loginError } =
+          await supabase.auth.signIn({
+            email,
+            password,
+          });
+
+        if (loginError) {
+          throw new Error(loginError.message); // Log or display the original error message
+        }
+
+        if (loginUser) {
+          // Dispatch updateUserSession action right here after successful login
+          dispatch(
+            updateUserSession({
+              id: loginUser.id,
+              email: loginUser.email,
+              role: loginUser.role, // Assuming your user object contains 'role'
+              confirmedAt: loginUser.confirmed_at, // Assuming your user object contains 'confirmed_at'
+            })
+          );
+
+          // Navigate or show success message after successful login
+          // Example using React Navigation
+          // navigation.navigate('Home');
+          // Or using a simple alert
+          alert("Signup and login successful!");
+        }
+      }
+    } catch (error) {
+      throw new Error("Signup or login failed: " + error.message);
+    }
+  }
+);
+
 export const login = createAsyncThunk(
   "auth/login",
   async ({ email, password }, { dispatch }) => {
@@ -78,6 +128,15 @@ const authSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(signup.fulfilled, (state, action) => {
+        state.isAuthenticated = true;
+        state.user = {
+          id: action.payload.id,
+          email: action.payload.email,
+          role: action.payload.role,
+          confirmedAt: action.payload.confirmedAt,
+        };
+      })
       .addCase(login.fulfilled, (state, action) => {
         state.isAuthenticated = true;
         state.user = action.payload; // Store user info from the login payload
